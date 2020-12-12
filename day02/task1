@@ -1,1 +1,11 @@
+const fs = require('fs');
+const aInput = fs.readFileSync('./day02/input.txt',{encoding:'utf-8'}).split('\n');
 
+let count = 0;
+for (let row in aInput){
+    let r = aInput[row].replace('-',' ').replace(':','').split(' ');
+    let c = r[3].length - r[3].replace(new RegExp(r[2], 'g'),'').length
+    if (c >= r[0] && c <= r[1]) { count++ }
+}
+
+console.log(count)
