@@ -13,3 +13,10 @@ for (let row in aInput){
 }
 
 console.log(count)
+
+
+
+// remove the first row and start check at character 3 on the now new first row
+// then loop through adding 3 each time
+// if you get to the max of the string, reset to 0 and add trailing amount to your check position
+// check for trees and count :-)
