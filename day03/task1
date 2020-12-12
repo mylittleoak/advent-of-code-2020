@@ -1,0 +1,15 @@
+const fs = require('fs');
+const aInput = fs.readFileSync('./day03/input.txt',{encoding:'utf-8'}).split('\n');
+
+aInput.shift();
+let count = 0;
+let c = 3;
+
+for (let row in aInput){
+    let r = aInput[row];
+    if( r.substr(c,1) === '#') { count++}
+    c+=3;
+    if( c >= r.length){ c = c - r.length }
+}
+
+console.log(count)
