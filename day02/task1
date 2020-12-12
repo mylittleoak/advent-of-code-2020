@@ -9,3 +9,10 @@ for (let row in aInput){
 }
 
 console.log(count)
+
+
+// so I went with replacing '-' with a space and then removing the ':' and then splitting by space into an array
+// then I removed the instances of the find character and took the length of that string from the original length
+// this tells me how many characters were originally there
+// then it's just a case of looking against the min and max that went into the array from the split
+// :-)
