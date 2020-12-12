@@ -1,0 +1,12 @@
+function product(){
+    expenses.forEach(function(item1, index1){      
+        expenses.forEach(function(item2, index2){
+            expenses.forEach(function(item3, index3){
+                if(item1 + item2 + item3 === 2020){ return item1 * item2 * item3; }
+                // if(item1 + item2 + item3 === 2020){ console.log( item1 * item2 * item3 )}
+            })
+        });
+    })
+}
+
+//product();
