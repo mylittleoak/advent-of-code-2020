@@ -14,8 +14,7 @@ for (let s in slopes) {
     let count = 0;
     let c = slopes[s].right;
     for (let x = slopes[s].down; x < aInput.length; x+= slopes[s].down ) {
-        let r = aInput[x];
-        if( r.substr(c,1) === '#') { count++}
+        if( aInput[x].substr(c,1) === '#') { count++}
         c+= slopes[s].right;
         if( c >= aInput[x].length){ c = c - aInput[x].length }
     }  
