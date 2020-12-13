@@ -1,0 +1,35 @@
+const fs = require('fs');
+const aInput = fs.readFileSync('./day04/input.txt',{encoding:'utf-8'}).split(/[\n\n][\n]+/);
+
+let checks = [
+    { "fld": 'byr', "req": true },
+    { "fld": 'iyr', "req": true },
+    { "fld": 'eyr', "req": true },
+    { "fld": 'hgt', "req": true },
+    { "fld": 'hcl', "req": true },
+    { "fld": 'ecl', "req": true },
+    { "fld": 'pid', "req": true },
+    { "fld": 'cid', "req": false }
+];
+
+const passMark = checks.filter(function(d){ return d.req}).length;
+let totalPassed = 0;
+
+for (p in aInput){  
+    let score = 0;
+    let arr = aInput[p].split(/[ \n]+/);
+    let checkString = '';
+    for (fld in arr){ checkString += arr[fld]}
+    for (chk in checks){
+        if(checks[chk].req){
+            if(checkString.indexOf(checks[chk].fld + ':') >=0){ score ++}
+        }   
+    }
+    if (score === passMark) { totalPassed ++}
+}    
+
+console.log(totalPassed)
+
+
+// phew - done - don't reckon I read in that file correctly but managed to hack it once in an array
+// might get caucght with me pants down in part 2 ....... let's see ;-)
