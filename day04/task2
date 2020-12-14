@@ -17,7 +17,7 @@ let totalPassed = 0;
  for (p in aInput){  
     let score = 0;
     let arr = aInput[p].split(/[ \n]+/);
-    for (fld in arr){ 
+    for (let fld in arr){ 
         let chkArr = checks.filter(function(d){ return d.fld === arr[fld].substr(0,3)})
         if(chkArr[0].req){
             let regEx = new RegExp(chkArr[0].regEx);
