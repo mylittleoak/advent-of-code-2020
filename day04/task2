@@ -14,7 +14,7 @@ let checks = [
 const passMark = checks.filter(function(d){ return d.req}).length;
 let totalPassed = 0;
 
- for (p in aInput){  
+ for (let p in aInput){  
     let score = 0;
     let arr = aInput[p].split(/[ \n]+/);
     for (let fld in arr){ 
