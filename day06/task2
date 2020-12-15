@@ -1,0 +1,27 @@
+const fs = require('fs');
+const aInput = fs.readFileSync('./day06/input.txt',{encoding:'utf-8'}).split(/[\n\n][\n]+/);
+let total = 0;
+
+for (let p in aInput){
+    let score = 0;
+    let arr = aInput[p].split(/[ \n]+/);
+    let people = arr.length;
+    if(people === 1){  // only one person in group  // row 172
+        score = arr[0].length
+    } else {
+        let fullStr = '';
+        for (fld in arr){ fullStr = fullStr + arr[fld] }
+        let ind = fullStr.split("").sort()
+        let chkCount = 0;
+        for (let x = 0; x < ind.length; x++) {
+            chkCount++;
+            if (ind[x] != ind[x+1]){
+                if(chkCount === people){score++}
+                chkCount = 0;
+             } 
+        }
+    }   
+    total = total + score
+}
+
+console.log('total', total)
