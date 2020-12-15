@@ -18,15 +18,13 @@ function reduceDetail(str, pos, extend, passMax, planeMax){
     return start;
 }
 
-for ( let pass in aInput){
+for ( let pass in aInput ){
     let seatID = 0;
     for (let r = 1;r <= passRows; r++){ reduceDetail(aInput[pass],r,0, passRows, planeRows) }
     seatID = start * 8;
     for (let c = 1;c <= passColumns; c++){ reduceDetail(aInput[pass],c,passRows, passColumns, planeColumns) }
     seatID = seatID + start;
     maxSeatID = Math.max(seatID, maxSeatID)
-
-    console.log('seat id is', seatID, 'max seat is', maxSeatID)
 }
 
 console.log(maxSeatID)
