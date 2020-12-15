@@ -1,0 +1,15 @@
+const fs = require('fs');
+const aInput = fs.readFileSync('./day06/input.txt',{encoding:'utf-8'}).split(/[\n\n][\n]+/);
+const removeDups= s=> s.split("").filter((e,i,f)=>f.indexOf(e)==i).sort().join("")
+let total = 0;
+
+for (let p in aInput){
+    let fullStr = '';
+    let arr = aInput[p].split(/[ \n]+/);
+    for (fld in arr){ fullStr = fullStr + arr[fld] }
+    total = total + removeDups(fullStr).length 
+}
+
+console.log(total)
+
+// OK I did nick the remove dups function - but hey, it works! :-)
