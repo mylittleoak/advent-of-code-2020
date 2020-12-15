@@ -1,0 +1,32 @@
+const fs = require('fs');
+const aInput = fs.readFileSync('./day05/input.txt',{encoding:'utf-8'}).split('\n');
+const planeRows = 128; 
+const planeColumns = 8; 
+let start; let end; let maxSeatID = 0;
+
+const passRows = Math.log2(planeRows);
+const passColumns = Math.log2(planeColumns);
+
+function reduceDetail(str, pos, extend, passMax, planeMax){
+    if(pos === 1){start = 0; end = planeMax-1};
+    let chr = str.substr(pos + extend - 1, 1)
+    if( chr === 'F' || chr === 'L') {
+        end = end - Math.pow(2,passMax-pos)
+    } else {
+        start = start + Math.pow(2,passMax-pos)
+    }
+    return start;
+}
+
+for ( let pass in aInput){
+    let seatID = 0;
+    for (let r = 1;r <= passRows; r++){ reduceDetail(aInput[pass],r,0, passRows, planeRows) }
+    seatID = start * 8;
+    for (let c = 1;c <= passColumns; c++){ reduceDetail(aInput[pass],c,passRows, passColumns, planeColumns) }
+    seatID = seatID + start;
+    maxSeatID = Math.max(seatID, maxSeatID)
+
+    console.log('seat id is', seatID, 'max seat is', maxSeatID)
+}
+
+console.log(maxSeatID)
