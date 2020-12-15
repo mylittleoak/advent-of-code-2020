@@ -28,7 +28,7 @@ for ( let pass in aInput){
 }
 
 allSeats.sort(function(a, b) { return a - b; });
-let i = 1;
+let i = 0;
 while (allSeats[i] > 0) {
     if (allSeats[i+1]-allSeats[i] === 2){ console.log( 'my seat is number', allSeats[i] + 1)}
     i++;
