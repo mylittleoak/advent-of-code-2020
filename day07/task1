@@ -1,0 +1,61 @@
+const fs = require('fs');
+const { isRegExp } = require('util');
+const aInput = fs.readFileSync('./day07/input.txt',{encoding:'utf-8'}).split('\n');
+let bags = []; let validBags = []; let chkArr = [];
+
+// import the text and make array of bags and content bags
+for ( let bag in aInput){
+  bags.push({'main': aInput[bag].substr(0,aInput[bag].indexOf('bag')-1), "sub": []})
+  let subs = aInput[bag].substr(  aInput[bag].indexOf('contain')+8   ,100).replace(/[,.]/g,'');
+  if (subs != 'no other bags'){
+    let subArr = subs.split(/(?=\d+)/);
+    for (let s in subArr){ 
+      subArr[s] = subArr[s].replace(/[\s]+$/, '').replace(/[ 0-9]+/,'').replace(/( bags| bag)/,'');
+    }
+    bags[bag].sub = subArr
+  }
+}
+
+// find the bags with direct shiny gold and put into valid bags and also the chk array (used to check in the recursive)
+for ( let b in bags){
+  let sCount = 0;
+  for ( let g in bags[b].sub) {
+    if(bags[b].sub[g] === 'shiny gold') {sCount++}
+  }
+  if ( sCount > 0){
+    validBags.push(bags[b].main);
+    chkArr.push(bags[b].main);
+  }
+}
+
+// now with chk array start the recursion....
+recursiveCheck()
+console.log('final total is', validBags.length)
+
+function recursiveCheck(){
+  // get the possibles, dedup then clear the chkArr
+  let tmpArr = []; let unique,Array = [];
+  for ( let g in chkArr){
+    for ( let b in bags){
+      let sCount = 0;
+      for ( let s in bags[b].sub) {
+        if(bags[b].sub[s] === chkArr[g]) {sCount++};
+      }
+      if ( sCount > 0){ tmpArr.push(bags[b].main) }
+    }
+  }
+  uniqueArray = tmpArr.filter(function(item, pos) {
+    return tmpArr.indexOf(item) == pos;
+  })
+  chkArr = [];
+
+  // add the ones already in valid table back into chkArr
+  for (let c in uniqueArray){
+    var x = validBags.filter(function(d){ return d === uniqueArray[c]}).length;
+    if ( x === 0){ chkArr.push(uniqueArray[c])}
+  }
+  validBags = validBags.concat(chkArr)
+  if(chkArr.length > 0){ 
+    recursiveCheck(); 
+  }
+}
