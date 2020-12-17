@@ -59,3 +59,8 @@ function recursiveCheck(){
     recursiveCheck(); 
   }
 }
+
+
+// well that was tough! Made so many mistakes when I thought I had it and submitted an answer
+// final attempt was because I had got a variable g when it need a b! arrghhhhhhhh!
+// onto task 2.......
