@@ -1,5 +1,4 @@
 const fs = require('fs');
-const { isRegExp } = require('util');
 const aInput = fs.readFileSync('./day07/input.txt',{encoding:'utf-8'}).split('\n');
 let bags = []; let validBags = []; let chkArr = [];
 
