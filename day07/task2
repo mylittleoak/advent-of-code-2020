@@ -1,0 +1,45 @@
+const fs = require('fs');
+const aInput = fs.readFileSync('./day07/input.txt',{encoding:'utf-8'}).split('\n');
+let bags = []; 
+
+// import the text and make array of bags and content bags
+for ( let bag in aInput){
+    bags.push({'main': aInput[bag].substr(0,aInput[bag].indexOf('bag')-1), "sub": []});
+    let subs = aInput[bag].substr(  aInput[bag].indexOf('contain')+8   ,100).replace(/[,.]/g,'');
+    if (subs != 'no other bags'){
+        let subArr = subs.split(/(?=\d+)/);
+        for (let s in subArr){ 
+            subArr[s] = subArr[s].replace(/[\s]+$/, '').replace(/( bags| bag)/,'');
+            bags[bag].sub.push({
+                'no': subArr[s].substr(0,subArr[s].indexOf(' ')),
+                'val': subArr[s].substr( subArr[s].indexOf(' ')+1,subArr[s].length).trim() 
+            })
+        }
+    }
+}
+
+let targetArr = [{"val": "shiny gold", "no": 1}];
+let total = 0; let newTargetArr = [];
+
+recursive(); // eat, sleep, rave, repeat
+
+function recursive(){
+    newTargetArr = [];
+    for (let t in targetArr){
+        let returnArray = []; 
+        let tmpArr = bags.filter(function(d,i){ return bags[i].main === targetArr[t].val })
+        for ( let s in tmpArr[0].sub){
+            returnArray.push({"val": tmpArr[0].sub[s].val, "no": Number(tmpArr[0].sub[s].no) })
+        }
+        for ( let r in returnArray){
+            total = total + targetArr[t].no * returnArray[r].no;
+            newTargetArr.push({"val": returnArray[r].val, "no": targetArr[t].no * returnArray[r].no })
+        }
+    }
+    targetArr = newTargetArr;
+    if(targetArr.length > 0){
+        recursive();
+    }
+}
+
+console.log('final total is', total)
