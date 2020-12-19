@@ -45,5 +45,5 @@ function recursive(){
 console.log('final total is', total)
 
 
-// so taks 2 code is shorter than taks 1?
-// reckon I done things the long way round in taks 1 ;-)
+// so task 2 code is shorter than task 1?
+// reckon I done things the long way round in task 1 ;-)
