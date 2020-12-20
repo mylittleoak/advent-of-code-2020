@@ -1,0 +1,48 @@
+const fs = require('fs');
+const aInput = fs.readFileSync('./day08/input.txt',{encoding:'utf-8'}).split('\n');
+let accumulator = 0;
+let bootcode = [];
+let idx = 0; 
+let changes = [];
+let amendedArray = [];
+
+for ( let r in aInput ){
+    bootcode.push({   
+        "operation": aInput[r].substr(0,3), 
+        "argument": Number(aInput[r].substr(4,aInput[r].length).trim())
+    });
+    let e = aInput[r].substr(0,3);
+    let n = '';
+    if(e !== 'acc'){ 
+      if(e === 'nop'){ n = 'jmp'} else { n = 'nop'}
+      changes.push({"id": Number(r), "new": n})
+    }
+}
+
+for ( let c in changes){
+  let found = []; accumulator = 0; idx = 0;
+  amendedArray = JSON.parse(JSON.stringify(bootcode));
+  amendedArray[changes[c].id].operation = changes[c].new;
+
+  for (let r = 0; r < amendedArray.length; r++){
+    if ( found.filter(function(d,i){ return found[i] === idx} ).length === 0 ){
+      found.push(idx)
+    }
+    if ( idx !== amendedArray.length-1 ) { 
+      switch(amendedArray[idx].operation) {
+        case 'acc':
+          accumulator = accumulator + amendedArray[idx].argument;
+          idx++;
+          break;
+        case 'jmp':
+          idx = idx + amendedArray[idx].argument
+          break;
+        default:
+          idx++;
+      }
+    }
+  }
+
+  if ( idx === amendedArray.length-1) { console.log('accumulator is', accumulator ) }
+
+}
