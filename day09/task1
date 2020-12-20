@@ -3,12 +3,12 @@ const aInput = fs.readFileSync('./day09/input.txt',{encoding:'utf-8'}).split('\n
 let preamble = 25;
 let errors = [];
 
-for ( let r = 0; r < aInput.length -preamble; r++){
+for ( let r = 0; r < aInput.length -preamble; r++ ){
     let target = Number(aInput[r + preamble]);
     let found = false;
     let checkArr = [];
     
-    for ( let c = 0; c < preamble; c++){
+    for ( let c = 0; c < preamble; c++ ){
         checkArr.push(aInput[r + c]);
     }
 
@@ -22,7 +22,7 @@ for ( let r = 0; r < aInput.length -preamble; r++){
         }
     }
 
-    if ( !found) { errors.push(target)}
+    if ( !found ) { errors.push(target) }
 }
 
 console.log('first instance is',errors[0])
