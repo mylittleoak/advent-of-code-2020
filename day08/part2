@@ -32,7 +32,7 @@ for ( let c in changes){
       switch(amendedArray[idx].operation) {
         case 'acc':
           accumulator = accumulator + amendedArray[idx].argument;
-          idx++;
+          idx++; 
           break;
         case 'jmp':
           idx = idx + amendedArray[idx].argument
