@@ -1,0 +1,21 @@
+const fs = require('fs');
+const aInput = fs.readFileSync('./day10/input.txt',{encoding:'utf-8'}).split('\n');
+aInput.sort(function(a, b) { return a - b; });
+let deviceRating = Number(Math.max(...aInput)) + 3;
+let adapters = [];
+
+adapters.push({"rating": 0, "jolt": 0})
+aInput.forEach(function(d,i){ adapters.push({ "rating": Number(aInput[i]), 'jolt': 0 }) })
+
+for ( let a = 0; a <= adapters.length-1; a++ ){
+    if ( a !== adapters.length-1){
+        adapters[a].jolt = adapters[a+1].rating - adapters[a].rating;
+    } else {
+        adapters[a].jolt = deviceRating - adapters[a].rating;
+    }
+}
+
+let j1 = adapters.filter(function(d,i){ return adapters[i].jolt === 1 }).length
+let j3 = adapters.filter(function(d,i){ return adapters[i].jolt === 3 }).length
+
+console.log('answer is', (j1*j3) )
