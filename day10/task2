@@ -1,0 +1,28 @@
+const fs = require('fs');
+const aInput = fs.readFileSync('./day10/input.txt',{encoding:'utf-8'}).split('\n');
+aInput.sort(function(a, b) { return a - b; });
+
+let adapters = [{"rating": 0, "count": 0}];
+let chkArr = [{"rating": 0, "count": 1}];
+
+aInput.forEach(function(d,i){ adapters.push({ "rating": Number(aInput[i]),'count': 0}) })
+let deviceRating = Math.max(...aInput);
+
+for ( let a in adapters ){
+    for ( let c in chkArr ){
+        if ( chkArr[c].rating === adapters[a].rating ){
+            let valid = adapters.filter(function(d,i){ return adapters[i].rating > chkArr[c].rating && adapters[i].rating <= chkArr[c].rating + 3 })
+            for ( let v in valid){
+                let tmp = adapters.filter(function(d,i){ return d.rating === valid[v].rating })
+                tmp[0].count =  tmp[0].count + chkArr[c].count
+            }
+        } else {
+            let tmp = adapters.filter(function(d,i){ return d.rating === chkArr[c].rating });
+            tmp[0].count = tmp[0].count + chkArr[c].count;
+        }
+    }
+    chkArr = JSON.parse(JSON.stringify(adapters)); // update the chkArr
+    chkArr = chkArr.filter(function(d,i){ return d.count > 0 })
+    if ( a == adapters.length-2){ console.log('count is', chkArr[0].count) }
+    for ( z in adapters){ adapters[z].count = 0}; // reset the adapters count
+}
