@@ -1,0 +1,44 @@
+const fs = require('fs');
+let sInput = fs.readFileSync('./day12/input.txt',{encoding:'utf-8'}).split('\n');
+let nX = 0; let nY = 0;
+const bearings = [ ['E', 1], ['S', 2], ['W', 3], ['N', 4] ]
+let currentHeading = 1; // east
+
+function turn(steps, direction){
+  if ( direction === 'R' ){
+    steps = steps/90;
+  } else {
+    steps = (360-steps) / 90
+  }
+  currentHeading = currentHeading + steps;
+  if ( currentHeading > 4 ) { currentHeading = currentHeading - 4}
+}
+
+function navigate(steps, direction){
+  if( direction === 'F' ){
+    move = currentHeading;
+  } else {
+    move = bearings.filter( function(d){ return d[0] === direction})[0][1]
+  }
+  switch(move) {
+    case 1: nX = nX + steps; break;
+    case 2: nY = nY - steps; break;
+    case 3: nX = nX - steps; break;
+    case 4: nY = nY + steps; break;
+  }
+}
+
+for ( let r in sInput){
+  let direction = sInput[r].substr(0,1);
+  let steps = Number(sInput[r].substr(1,sInput[r].length-1));
+  switch(direction) {
+    case 'L': case 'R':
+      turn(steps, direction); break;
+    default:
+      navigate(steps, direction);
+  }
+}
+
+console.log('Manhattan distance is', (Math.abs(nX)+Math.abs(nY))  )
+
+
